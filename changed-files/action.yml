@@ -17,5 +17,6 @@ runs:
       id: changes
       run: |
         echo "::set-output name=gpml::$(git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | grep .gpml$ | xargs)"
+      shell: bash
     - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
       shell: bash
