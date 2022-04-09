@@ -1,0 +1,38 @@
+name: Covert GPML files
+description: This action is used to conver GPML files to RDF files
+
+inputs:
+  file-name:
+    description: List of name of GPML files to be converted
+    required: true
+
+outputs:
+  rdf-files-name:
+    description: "List of name of RDF files"
+    value: ${{ steps.convert.outputs.files }}"
+
+runs:
+  using: composite
+  steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      with:
+        repository: 'wikipathways/SARS-CoV-2-WikiPathways'
+        fetch-depth: 0
+        path: 'SARS-CoV-2-WikiPathways/'
+    - name: Setup Java
+      uses: actions/setup-java@v2
+      with:
+        distribution: 'temurin'
+        java-version: '8'
+    - name: Convert files
+      run: |
+        for f in ${{ inputs.file-name }}; do
+          wpid="$(basename ""$f"")"
+          echo "generating RDF files for $wpid"
+          #  Same linux commands used to run check on local     
+        done
+      shell: bash
+    - name: Set GitHub Action Path
+      run: echo "${{ github.action_path }}" >> $GITHUB_PATH
+      shell: bash
